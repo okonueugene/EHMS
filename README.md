@@ -32,7 +32,11 @@ This project is a Laravel Hospital api.
 
     php artisan asset:publish
 
-6. Run the application:
+6. Migrate tables:
+
+    php artisan migrate
+
+7. Run the application:
    php artisan serve
 
 The application will be running on http://localhost:8000/api.
