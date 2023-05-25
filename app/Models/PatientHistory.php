@@ -11,6 +11,7 @@ class PatientHistory extends Model
 
     protected $fillable = [
         'patient_id',
+        'uuid',
         'user_id',
         'symptoms',
         'diagnosis',

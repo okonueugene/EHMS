@@ -12,6 +12,7 @@ return new class () extends Migration {
     {
         Schema::create('patient_histories', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
             $table->foreignId('patient_id')->constrained('patients');
             $table->foreignId('user_id')->constrained('users');
             $table->string('symptoms');

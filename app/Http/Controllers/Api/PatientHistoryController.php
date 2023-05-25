@@ -23,10 +23,20 @@ class PatientHistoryController extends Controller
 
         $this->validate($request, $rules);
 
+        function generateUniqueHealthRecordIdentifier()
+        {
+            // Generate a random string of 11 characters.
+            $randomString = Str::random(11);
+
+            // Return the random string as the unique identifier.
+            return $randomString;
+        }
+
         //create patient history
 
         $patientHistory = PatientHistory::create([
             'patient_id' => $request->patient_id,
+            'uuid' => generateUniqueHealthRecordIdentifier(),
             'user_id' => $request->user_id,
             'symptoms' => $request->symptoms,
             'diagnosis' => $request->diagnosis,
