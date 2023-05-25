@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Triage;
+use App\Models\PatientHistory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Patient extends Model
 {
@@ -23,4 +25,14 @@ class Patient extends Model
         'phone_number',
     ];
 
+
+    public function history()
+    {
+        return $this->hasMany(PatientHistory::class);
+    }
+
+    public function triage()
+    {
+        return $this->hasMany(Triage::class);
+    }
 }

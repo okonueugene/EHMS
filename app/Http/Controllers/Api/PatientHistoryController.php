@@ -161,4 +161,49 @@ class PatientHistoryController extends Controller
         }
     }
 
+    //get patient history by patient id
+
+    public function getPatientHistoryByPatientId(Request $request)
+    {
+        $patientHistory = PatientHistory::where('patient_id', $request->patient_id)->get();
+
+        if($patientHistory) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history fetched successfully',
+                'data' => $patientHistory
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history fetch failed'
+            ], 400);
+        }
+    }
+
+    //get patient history by patient name through relationship history
+
+    public function getPatientHistoryByPatientName(Request $request)
+    {
+        $patientHistory = PatientHistory::whereHas('patient', function ($query) use ($request) {
+            $query->where('name', 'like', '%'.$request->name.'%');
+        })->get();
+
+        if($patientHistory) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history fetched successfully',
+                'data' => $patientHistory
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history fetch failed'
+            ], 400);
+        }
+    }
+
+
+
+
 }

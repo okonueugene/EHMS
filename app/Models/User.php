@@ -45,4 +45,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function patient()
+    {
+        return $this->hasMany(Patient::class);
+    }
+
+    public function triage()
+    {
+        return $this->hasMany(Triage::class);
+    }
 }
