@@ -7,5 +7,148 @@ use Illuminate\Http\Request;
 
 class PatientHistoryController extends Controller
 {
-    //
+    //add patient history
+    public function addPatientHistory()
+    {
+        //validate input
+
+        $rules = [
+            'patient_id' => 'required',
+            'user_id' => 'required',
+            'symptoms' => 'required',
+            'diagnosis' => 'required',
+            'prescription' => 'required',
+            'lab_test_results' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        //create patient history
+
+        $patientHistory = PatientHistory::create([
+            'patient_id' => $request->patient_id,
+            'user_id' => $request->user_id,
+            'symptoms' => $request->symptoms,
+            'diagnosis' => $request->diagnosis,
+            'prescription' => $request->prescription,
+            'lab_test_results' => $request->lab_test_results,
+        ]);
+
+        if($patientHistory) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history created successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history creation failed'
+            ], 400);
+        }
+    }
+
+    //get patient history by id
+
+    public function getPatientHistoryById(Request $request)
+    {
+        $patientHistory = PatientHistory::find($request->id);
+
+        if($patientHistory) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history fetched successfully',
+                'data' => $patientHistory
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history fetch failed'
+            ], 400);
+        }
+    }
+
+    //get all patient history
+
+    public function getPatientHistory()
+    {
+        $patientHistory = PatientHistory::all();
+
+        if($patientHistory) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history fetched successfully',
+                'data' => $patientHistory
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history fetch failed'
+            ], 400);
+        }
+    }
+
+    //update patient history
+
+    public function updatePatientHistory(Request $request)
+    {
+        //validate input
+
+        $rules = [
+            'patient_id' => 'required',
+            'user_id' => 'required',
+            'symptoms' => 'required',
+            'diagnosis' => 'required',
+            'prescription' => 'required',
+            'lab_test_results' => 'required',
+        ];
+
+        $this->validate($request, $rules);
+
+        //update patient history
+
+        $patientHistory = PatientHistory::find($request->id);
+
+        if($patientHistory) {
+            $patientHistory->update([
+                'patient_id' => $request->patient_id,
+                'user_id' => $request->user_id,
+                'symptoms' => $request->symptoms,
+                'diagnosis' => $request->diagnosis,
+                'prescription' => $request->prescription,
+                'lab_test_results' => $request->lab_test_results,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history updated successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history update failed'
+            ], 400);
+        }
+    }
+
+    //delete patient history
+
+    public function deletePatientHistory(Request $request)
+    {
+        $patientHistory = PatientHistory::find($request->id);
+
+        if($patientHistory) {
+            $patientHistory->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patient history deleted successfully'
+            ], 200);
+        } else {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Patient history delete failed'
+            ], 400);
+        }
+    }
+
 }
